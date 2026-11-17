@@ -8,6 +8,11 @@ let handle = null;
 
 const status = (text) => postMessage({ type: "status", text });
 
+// Pyodide can fail a download inside a promise it never surfaces (e.g. a dropped CDN connection).
+self.onunhandledrejection = (ev) => {
+  if (!handle) postMessage({ type: "fatal", error: String(ev.reason?.message || ev.reason || "download failed") });
+};
+
 async function fetchBytes(url, label) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`could not download ${label} (HTTP ${res.status})`);

@@ -28,17 +28,37 @@
   let busy = false;
   let readyResolve, readyReject;
   const ready = new Promise((res, rej) => { readyResolve = res; readyReject = rej; });
+  ready.catch(() => {});   // callers see the error; avoid an extra "uncaught" log
   const queue = [];                  // requests not yet sent
+
+  let started = false;
+  const fail = (msg) => {
+    if (started) return;
+    started = true;
+    clearTimeout(stallTimer);
+    setStatus(`The in-browser model failed to start: ${msg}. Reload the page to retry, or run SwarmRisk locally.`, "error");
+    readyReject(new Error(msg));
+  };
+  // A stalled download should become a visible error, not an endless spinner.
+  let stallTimer;
+  const armStall = () => {
+    clearTimeout(stallTimer);
+    stallTimer = setTimeout(() => fail("loading stalled for 3 minutes (slow or interrupted connection?)"), 180_000);
+  };
+  armStall();
 
   worker.onmessage = (ev) => {
     const m = ev.data;
-    if (m.type === "status") return setStatus(m.text);
-    if (m.type === "ready") { setStatus("", "ready"); readyResolve(); return; }
-    if (m.type === "fatal") {
-      setStatus(`The in-browser model failed to start: ${m.error}. Try reloading, or run SwarmRisk locally.`, "error");
-      readyReject(new Error(m.error));
+    if (m.type === "status") { armStall(); return setStatus(m.text); }
+    if (m.type === "ready") {
+      if (started) return;
+      started = true;
+      clearTimeout(stallTimer);
+      setStatus("", "ready");
+      readyResolve();
       return;
     }
+    if (m.type === "fatal") return fail(m.error);
     const w = waiting.get(m.id);
     if (!w) return;
     waiting.delete(m.id);
@@ -46,7 +66,10 @@
     m.error ? w.reject(new Error(m.error)) : w.resolve(m.result);
     pump();
   };
-  worker.onerror = (e) => setStatus(`The in-browser model crashed: ${e.message || "unknown error"}.`, "error");
+  worker.onerror = (e) => {
+    if (!started) return fail(e.message || "the worker crashed");
+    setStatus(`The in-browser model crashed: ${e.message || "unknown error"}. Reload the page.`, "error");
+  };
   worker.postMessage({ type: "boot", base: BASE });
 
   function pump() {
