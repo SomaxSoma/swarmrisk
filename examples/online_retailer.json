@@ -1,0 +1,13 @@
+{
+  "_name": "Online retailer",
+  "_description": "E-commerce business that lives on uptime, with low margins and a small cash cushion.",
+  "industry": "retail", "employees": 900, "annual_revenue_musd": 250, "profit_margin": 0.04,
+  "cash_reserve_months": 1.5, "cyber_insurance": false, "prior_incidents_3y": 1,
+  "internet_facing_services": 90, "ai_agent_integrations": 12, "api_exposure": 0.7, "third_party_vendors": 150,
+  "cloud_share": 0.8, "legacy_system_share": 0.15, "ot_ics_present": false,
+  "security_staff": 3, "security_budget_pct": 5, "mfa_coverage": 0.5, "patch_latency_days": 30,
+  "edr_coverage": 0.55, "network_segmentation": 0.3, "zero_trust_maturity": 0.2, "ai_threat_detection": 0.2,
+  "soc_24x7": false, "security_training": 0.4, "deepfake_verification": false,
+  "immutable_backups": false, "backup_frequency_hours": 48, "restore_test_days": 500, "ir_maturity": 0.25,
+  "dr_site": false, "swarm_size": 250, "attacker_sophistication": 0.55, "campaign_days": 30
+}

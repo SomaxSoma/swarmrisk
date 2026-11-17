@@ -1,0 +1,13 @@
+{
+  "_name": "Regional hospital",
+  "_description": "Mid-size hospital network: thin margins, legacy clinical systems, connected medical devices.",
+  "industry": "healthcare", "employees": 2500, "annual_revenue_musd": 400, "profit_margin": 0.02,
+  "cash_reserve_months": 2, "cyber_insurance": true, "prior_incidents_3y": 2,
+  "internet_facing_services": 120, "ai_agent_integrations": 8, "api_exposure": 0.35, "third_party_vendors": 400,
+  "cloud_share": 0.25, "legacy_system_share": 0.45, "ot_ics_present": true,
+  "security_staff": 6, "security_budget_pct": 6, "mfa_coverage": 0.55, "patch_latency_days": 60,
+  "edr_coverage": 0.6, "network_segmentation": 0.3, "zero_trust_maturity": 0.15, "ai_threat_detection": 0.15,
+  "soc_24x7": false, "security_training": 0.45, "deepfake_verification": false,
+  "immutable_backups": false, "backup_frequency_hours": 24, "restore_test_days": 365, "ir_maturity": 0.35,
+  "dr_site": false, "swarm_size": 300, "attacker_sophistication": 0.7, "campaign_days": 30
+}

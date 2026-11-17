@@ -1,0 +1,13 @@
+{
+  "_name": "Global bank",
+  "_description": "Tier-1 bank with mature defences facing a state-level swarm.",
+  "industry": "finance", "employees": 80000, "annual_revenue_musd": 40000, "profit_margin": 0.22,
+  "cash_reserve_months": 8, "cyber_insurance": true, "prior_incidents_3y": 4,
+  "internet_facing_services": 3000, "ai_agent_integrations": 250, "api_exposure": 0.6, "third_party_vendors": 6000,
+  "cloud_share": 0.45, "legacy_system_share": 0.2, "ot_ics_present": false,
+  "security_staff": 1500, "security_budget_pct": 15, "mfa_coverage": 0.97, "patch_latency_days": 10,
+  "edr_coverage": 0.95, "network_segmentation": 0.8, "zero_trust_maturity": 0.7, "ai_threat_detection": 0.8,
+  "soc_24x7": true, "security_training": 0.8, "deepfake_verification": true,
+  "immutable_backups": true, "backup_frequency_hours": 4, "restore_test_days": 30, "ir_maturity": 0.9,
+  "dr_site": true, "swarm_size": 3000, "attacker_sophistication": 0.95, "campaign_days": 60
+}

@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "trained_at": "2026-11-17 20:35:09",
+  "n_samples": 600000,
+  "metrics": {
+    "classifiers": {
+      "breach": {
+        "target": "breached",
+        "test_rate": 0.7257643596221349,
+        "auc": 0.9292247886012885,
+        "brier": 0.09623605422366785,
+        "brier_skill": 0.5164757336069847,
+        "log_loss": 0.2954270171553606,
+        "iterations": 127
+      },
+      "severe": {
+        "target": "severe_damage",
+        "test_rate": 0.16338577753320493,
+        "auc": 0.9518499398170832,
+        "brier": 0.06419857009903797,
+        "brier_skill": 0.5303375248260269,
+        "log_loss": 0.2014469481566497,
+        "iterations": 167
+      },
+      "collapse": {
+        "target": "collapse",
+        "test_rate": 0.05084335943036761,
+        "auc": 0.9754120420324791,
+        "brier": 0.025158358212122242,
+        "brier_skill": 0.47867306069327387,
+        "log_loss": 0.08273036306169454,
+        "iterations": 600
+      },
+      "impact_given_breach": {
+        "target": "impact | breached",
+        "test_rate": 0.4198010247455368,
+        "auc": 0.905303614601758,
+        "brier": 0.12299501534027495
+      }
+    },
+    "regressors": {
+      "damage": {
+        "mae": 7.055741701206621,
+        "r2": 0.6321756737284339
+      },
+      "recovery_impact_q10": {
+        "quantile": 0.1,
+        "coverage": 0.10453724481418641
+      },
+      "recovery_impact_q50": {
+        "quantile": 0.5,
+        "coverage": 0.49335011767281484
+      },
+      "recovery_impact_q90": {
+        "quantile": 0.9,
+        "coverage": 0.8873624870012589
+      },
+      "recovery_contained_q10": {
+        "quantile": 0.1,
+        "coverage": 0.10543719309361635
+      },
+      "recovery_contained_q50": {
+        "quantile": 0.5,
+        "coverage": 0.49912878187866305
+      },
+      "recovery_contained_q90": {
+        "quantile": 0.9,
+        "coverage": 0.8970378583874544
+      },
+      "loss_impact_q10": {
+        "quantile": 0.1,
+        "coverage": 0.1054403152536807
+      },
+      "loss_impact_q50": {
+        "quantile": 0.5,
+        "coverage": 0.4901483224782442
+      },
+      "loss_impact_q90": {
+        "quantile": 0.9,
+        "coverage": 0.8874445843139401
+      },
+      "loss_contained_q10": {
+        "quantile": 0.1,
+        "coverage": 0.10537779185807065
+      },
+      "loss_contained_q50": {
+        "quantile": 0.5,
+        "coverage": 0.5038412798986219
+      },
+      "loss_contained_q90": {
+        "quantile": 0.9,
+        "coverage": 0.8932559797243783
+      },
+      "recovery_mixture": {
+        "q10_coverage": 0.10381867058796498,
+        "q50_coverage": 0.49302667555085816,
+        "q90_coverage": 0.8911609953357995
+      },
+      "loss_mixture": {
+        "q10_coverage": 0.1062196999287733,
+        "q50_coverage": 0.49487627231578707,
+        "q90_coverage": 0.8881625807044551
+      }
+    },
+    "fidelity": {
+      "companies": 200,
+      "runs_per_company": 500,
+      "p_breach": {
+        "mae": 0.01218636900474591,
+        "corr": 0.9980942772979773
+      },
+      "p_severe": {
+        "mae": 0.014459432486814076,
+        "corr": 0.9944595941610287
+      },
+      "p_collapse": {
+        "mae": 0.014419861100980475,
+        "corr": 0.9597771567019103
+      },
+      "p_impact_given_breach": {
+        "mae": 0.018753789731812246,
+        "corr": 0.9959591069866399
+      },
+      "recovery_q50": {
+        "mae": 2.628004060355145,
+        "corr": 0.9942474814785683,
+        "median_abs_rel_err": 0.03629984227375389
+      }
+    }
+  }
+}

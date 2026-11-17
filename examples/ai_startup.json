@@ -1,0 +1,13 @@
+{
+  "_name": "AI startup",
+  "_description": "Venture-funded startup: cloud-native, many autonomous agents, tiny security team, burning cash.",
+  "industry": "technology", "employees": 60, "annual_revenue_musd": 8, "profit_margin": -0.35,
+  "cash_reserve_months": 10, "cyber_insurance": false, "prior_incidents_3y": 0,
+  "internet_facing_services": 35, "ai_agent_integrations": 60, "api_exposure": 0.9, "third_party_vendors": 45,
+  "cloud_share": 0.95, "legacy_system_share": 0.02, "ot_ics_present": false,
+  "security_staff": 1, "security_budget_pct": 5, "mfa_coverage": 0.9, "patch_latency_days": 14,
+  "edr_coverage": 0.5, "network_segmentation": 0.4, "zero_trust_maturity": 0.35, "ai_threat_detection": 0.2,
+  "soc_24x7": false, "security_training": 0.5, "deepfake_verification": false,
+  "immutable_backups": false, "backup_frequency_hours": 24, "restore_test_days": 400, "ir_maturity": 0.2,
+  "dr_site": false, "swarm_size": 100, "attacker_sophistication": 0.6, "campaign_days": 21
+}

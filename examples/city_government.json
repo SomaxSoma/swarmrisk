@@ -1,0 +1,13 @@
+{
+  "_name": "City government",
+  "_description": "Municipal administration: many legacy systems, limited security budget, public-facing services.",
+  "industry": "government", "employees": 4000, "annual_revenue_musd": 600, "profit_margin": 0.0,
+  "cash_reserve_months": 3, "cyber_insurance": true, "prior_incidents_3y": 3,
+  "internet_facing_services": 200, "ai_agent_integrations": 4, "api_exposure": 0.25, "third_party_vendors": 300,
+  "cloud_share": 0.3, "legacy_system_share": 0.55, "ot_ics_present": true,
+  "security_staff": 10, "security_budget_pct": 5, "mfa_coverage": 0.45, "patch_latency_days": 90,
+  "edr_coverage": 0.5, "network_segmentation": 0.25, "zero_trust_maturity": 0.1, "ai_threat_detection": 0.1,
+  "soc_24x7": false, "security_training": 0.4, "deepfake_verification": false,
+  "immutable_backups": false, "backup_frequency_hours": 48, "restore_test_days": 700, "ir_maturity": 0.3,
+  "dr_site": false, "swarm_size": 500, "attacker_sophistication": 0.75, "campaign_days": 30
+}

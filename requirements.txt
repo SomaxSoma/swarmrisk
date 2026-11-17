@@ -1,0 +1,12 @@
+# Exact versions: models/swarmrisk_model.joblib only loads in the scikit-learn version that trained it,
+# and these match the packages Pyodide 0.29 ships for the in-browser GitHub Pages demo.
+numpy==2.2.5
+pandas==2.3.2
+scipy==1.14.1
+scikit-learn==1.7.0
+joblib==1.4.2
+fastapi==0.163.1
+uvicorn==0.54.0
+plotly==5.24.1     # only its bundled plotly.min.js is used, so the local dashboard works offline
+pytest==9.2.0
+httpx==0.28.1      # FastAPI TestClient

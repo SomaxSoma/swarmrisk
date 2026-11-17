@@ -1,0 +1,13 @@
+{
+  "_name": "Power utility",
+  "_description": "Electricity provider with industrial control systems targeted by a state-level swarm.",
+  "industry": "energy", "employees": 6000, "annual_revenue_musd": 3000, "profit_margin": 0.09,
+  "cash_reserve_months": 5, "cyber_insurance": true, "prior_incidents_3y": 1,
+  "internet_facing_services": 250, "ai_agent_integrations": 15, "api_exposure": 0.3, "third_party_vendors": 900,
+  "cloud_share": 0.2, "legacy_system_share": 0.4, "ot_ics_present": true,
+  "security_staff": 45, "security_budget_pct": 9, "mfa_coverage": 0.75, "patch_latency_days": 45,
+  "edr_coverage": 0.7, "network_segmentation": 0.6, "zero_trust_maturity": 0.35, "ai_threat_detection": 0.4,
+  "soc_24x7": true, "security_training": 0.6, "deepfake_verification": true,
+  "immutable_backups": true, "backup_frequency_hours": 24, "restore_test_days": 120, "ir_maturity": 0.6,
+  "dr_site": true, "swarm_size": 1000, "attacker_sophistication": 0.95, "campaign_days": 45
+}
