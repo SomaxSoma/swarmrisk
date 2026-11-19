@@ -4,131 +4,198 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SwarmRisk</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e5484d'/><circle cx='10' cy='12' r='3' fill='white'/><circle cx='21' cy='10' r='2.5' fill='white'/><circle cx='18' cy='21' r='3.5' fill='white'/></svg>">
-  <link rel="stylesheet" href="/static/style.css">
+  <meta name="description" content="Predict breach, infrastructure damage, collapse and recovery time for a company attacked by an autonomous AI-agent swarm.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23060606'/><circle cx='10' cy='12' r='3' fill='%23f0f0f0'/><circle cx='21' cy='10' r='2.5' fill='%23f0f0f0'/><circle cx='18' cy='21' r='3.5' fill='%23f0f0f0'/><circle cx='9' cy='22' r='1.8' fill='%23f0f0f0'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="/static/style.css?v=2">
   <script src="/vendor/plotly.min.js"></script>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">
-    <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--accent)"/><circle cx="10" cy="12" r="3" fill="#fff"/><circle cx="21" cy="10" r="2.5" fill="#fff"/><circle cx="18" cy="21" r="3.5" fill="#fff"/><circle cx="9" cy="22" r="1.8" fill="#fff"/></svg>
-    <div>
-      <h1>SwarmRisk</h1>
-      <p>AI-agent swarm attack predictor</p>
-    </div>
-  </div>
-  <div class="topbar-right">
-    <span id="model-badge" class="badge">loading model…</span>
-    <button id="btn-export" class="btn ghost" title="Download the full report as JSON">Export report</button>
-  </div>
-</header>
+<div class="page">
+  <div class="noise" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="content">
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="preset-row">
-      <label for="preset">Start from a preset</label>
-      <select id="preset"></select>
-      <p id="preset-desc" class="muted small"></p>
-    </div>
-    <form id="profile-form" autocomplete="off"></form>
-    <div class="sidebar-foot">
-      <button id="btn-reset" class="btn ghost" type="button">Reset to preset</button>
-      <label class="auto"><input type="checkbox" id="auto" checked> live update</label>
-      <button id="btn-assess" class="btn primary" type="button">Assess</button>
-    </div>
-  </aside>
+    <header class="masthead">
+      <a class="masthead-title" href="#outcomes">SWARMRISK</a>
+      <div class="masthead-right">
+        <span id="model-badge">LOADING MODEL…</span>
+        <span class="masthead-model"><span class="breath-dot"></span><span id="engine-label">LIVE MODEL</span></span>
+        <button id="btn-export" class="masthead-views" type="button" title="Download the full report as JSON">EXPORT REPORT</button>
+        <a class="masthead-views" href="https://github.com/SomaxSoma/swarmrisk" target="_blank" rel="noopener" aria-label="Source code on GitHub">
+          <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>GITHUB</span>
+        </a>
+      </div>
+    </header>
 
-  <main class="content">
-    <div id="error" class="error" hidden></div>
+    <section class="hero">
+      <div class="hero-kicker" id="hero-kicker">AI-AGENT SWARM ATTACK · RISK ASSESSMENT</div>
+      <div class="hero-row">
+        <div class="hero-num"><span id="score">–</span><span class="hero-num-unit">/100</span></div>
+        <div class="hero-sub" id="hero-sub">Resilience score. Loading the model…</div>
+      </div>
+      <p class="hero-lede" id="summary">SwarmRisk predicts what happens when a swarm of autonomous AI agents attacks a company: whether
+        they get in, how much infrastructure is destroyed, whether the company survives, and how long recovery takes.</p>
+      <div class="hero-scope">Outcomes come from an agent-based attack simulator built on stated security assumptions, learned by
+        gradient-boosted models trained on 600,000 simulated campaigns. Use it for relative risk and prioritisation, not as an
+        actuarial forecast. <a href="#model">Method and limits</a>.</div>
+      <div class="hero-chart">
+        <div class="hero-bars hgrp" id="hero-bars"></div>
+        <div class="hero-bar-labels" id="hero-bar-labels"></div>
+        <div class="hero-caption">Predicted outcomes for this company if the swarm attacks. Damage is the share of IT and OT systems destroyed or encrypted, given a breach.</div>
+      </div>
+    </section>
 
-    <section class="kpis">
-      <div class="card grade-card">
-        <div class="card-title">Resilience grade</div>
-        <div class="grade-wrap">
-          <div id="grade" class="grade">–</div>
-          <div>
-            <div class="score"><span id="score">–</span><small>/100</small></div>
-            <div class="muted small">higher is safer</div>
+    <nav class="tabs-wrap" id="tabs-wrap" aria-label="Sections">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" data-tab="outcomes" type="button">OUTCOMES</button>
+        <button class="tab" role="tab" data-tab="drivers" type="button">RISK DRIVERS</button>
+        <button class="tab" role="tab" data-tab="actions" type="button">ACTIONS</button>
+        <button class="tab" role="tab" data-tab="threat" type="button">THREAT CURVES</button>
+        <button class="tab" role="tab" data-tab="simulation" type="button">SIMULATION</button>
+        <button class="tab" role="tab" data-tab="model" type="button">MODEL</button>
+      </div>
+    </nav>
+
+    <div class="error" id="error" role="alert" hidden></div>
+
+    <main class="panel">
+      <aside class="panel-left">
+        <div class="pl-kicker">COMPANY PROFILE</div>
+        <label class="field-label" for="preset">START FROM A PRESET</label>
+        <select id="preset" class="px-select wide"></select>
+        <p id="preset-desc" class="pl-brief"></p>
+        <form id="profile-form" autocomplete="off"></form>
+        <div class="form-foot">
+          <button id="btn-reset" class="pr-face" type="button">RESET</button>
+          <label class="auto"><input type="checkbox" id="auto" checked> LIVE UPDATE</label>
+          <button id="btn-assess" class="pr-face active" type="button">ASSESS</button>
+        </div>
+      </aside>
+
+      <section class="panel-right">
+
+        <div class="tabpanel" data-panel="outcomes" role="tabpanel">
+          <div class="pr-head"><span class="pr-title">If the swarm attacks</span><span class="pr-unit">probability</span></div>
+          <div class="hbars hgrp" id="outcome-bars"></div>
+          <div class="split">
+            <div>
+              <div class="pr-head"><span class="pr-title">Recovery time if breached</span></div>
+              <div class="pl-bigrow"><span class="pl-big" id="rec-p50">–</span></div>
+              <div class="pl-biglabel" id="rec-range"></div>
+              <div class="range"><div class="range-track"><div class="range-fill" id="rec-bar"></div><div class="range-mid" id="rec-mid"></div></div>
+                <div class="range-axis"><span>0</span><span id="rec-axis-max"></span></div></div>
+              <div class="pl-stats">
+                <div class="pl-stat"><span class="pl-stat-k">After a detonation</span><span class="pl-stat-v" id="rec-imp">–</span></div>
+                <div class="pl-stat"><span class="pl-stat-k">If contained in time</span><span class="pl-stat-v" id="rec-con">–</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="pr-head"><span class="pr-title">Damage and cost if breached</span></div>
+              <div class="pl-bigrow"><span class="pl-big" id="loss50">–</span></div>
+              <div class="pl-biglabel">typical net loss after insurance</div>
+              <div class="pl-stats">
+                <div class="pl-stat"><span class="pl-stat-k">Bad case (90th pct.)</span><span class="pl-stat-v" id="loss90">–</span></div>
+                <div class="pl-stat"><span class="pl-stat-k">Swarm detonates</span><span class="pl-stat-v" id="deton">–</span></div>
+                <div class="pl-stat"><span class="pl-stat-k">Infrastructure damaged</span><span class="pl-stat-v" id="dmg">–</span></div>
+                <div class="pl-stat"><span class="pl-stat-k">Resilience grade</span><span class="pl-stat-v" id="grade">–</span></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="card gauge-card"><div class="card-title">Breach probability</div><div id="g-breach" class="gauge"></div></div>
-      <div class="card gauge-card"><div class="card-title">Severe infrastructure damage</div><div id="g-severe" class="gauge"></div></div>
-      <div class="card gauge-card"><div class="card-title">Company collapse</div><div id="g-collapse" class="gauge"></div></div>
-      <div class="card stat-card">
-        <div class="card-title">Recovery time if breached</div>
-        <div class="stat" id="rec-p50">–</div>
-        <div class="muted small" id="rec-range"></div>
-        <div class="range-bar"><div id="rec-bar"></div></div>
-        <div class="stat-row small" style="margin-top:8px"><span>After a detonation</span><b id="rec-imp">–</b></div>
-        <div class="stat-row small"><span>If contained in time</span><b id="rec-con">–</b></div>
-      </div>
-      <div class="card stat-card">
-        <div class="card-title">If breached</div>
-        <div class="stat-row"><span>Swarm detonates</span><b id="deton">–</b></div>
-        <div class="stat-row"><span>Infrastructure damaged</span><b id="dmg">–</b></div>
-        <div class="stat-row"><span>Net loss (typical)</span><b id="loss50">–</b></div>
-        <div class="stat-row"><span>Net loss (bad case)</span><b id="loss90">–</b></div>
-      </div>
-    </section>
 
-    <section class="card summary"><p id="summary">Loading…</p></section>
-
-    <section class="grid2">
-      <div class="card">
-        <div class="card-head"><h2>How risk scales with the swarm</h2><span class="muted small">Model prediction vs number of attacking agents</span></div>
-        <div id="chart-swarm" class="chart"></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><h2>Threat matrix</h2><span class="muted small">Risk index by swarm size × attacker sophistication</span></div>
-        <div id="chart-matrix" class="chart"></div>
-      </div>
-    </section>
-
-    <section class="grid2">
-      <div class="card">
-        <div class="card-head"><h2>What drives this company's risk</h2><span class="muted small">Risk-index points vs a typical company (red = riskier)</span></div>
-        <div id="chart-drivers" class="chart tall"></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><h2>Recommended actions</h2><span class="muted small">Ranked by predicted risk reduction</span></div>
-        <div id="recs"></div>
-        <div id="plan" class="plan"></div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="card-head">
-        <h2>Attack simulation</h2>
-        <span class="muted small">Replay thousands of swarm campaigns through the agent-based simulator</span>
-        <div class="sim-controls">
-          <select id="sim-runs"><option>500</option><option selected>2000</option><option>5000</option></select>
-          <button id="btn-sim" class="btn primary" type="button">Run simulation</button>
+        <div class="tabpanel" data-panel="drivers" role="tabpanel" hidden>
+          <div class="pr-head"><span class="pr-title">What drives this company's risk</span><span class="pr-unit">risk-index points vs a typical company</span></div>
+          <div class="dbars hgrp" id="driver-bars"></div>
+          <p class="chart-note">Each input is reset to the value a typical company has, and the change in the risk index is measured.
+            Bars to the right make this company riskier; bars to the left make it safer than typical.</p>
         </div>
-      </div>
-      <div id="sim-empty" class="muted">Run a simulation to watch how a typical campaign unfolds hour by hour, and to cross-check the ML prediction.</div>
-      <div id="sim-body" hidden>
-        <div class="grid3">
-          <div><h3>Campaign timeline</h3><div id="chart-timeline" class="chart"></div></div>
-          <div><h3>Recovery time distribution</h3><div id="chart-recovery" class="chart"></div></div>
-          <div><h3>How the swarm gets in</h3><div id="chart-vectors" class="chart"></div></div>
-        </div>
-        <table class="compare">
-          <thead><tr><th>Metric</th><th>ML model</th><th>Simulation</th></tr></thead>
-          <tbody id="compare-body"></tbody>
-        </table>
-        <p id="sim-notes" class="muted small"></p>
-      </div>
-    </section>
 
-    <footer class="card foot">
-      <div id="model-card"></div>
-      <p class="muted small">SwarmRisk models outcomes with an agent-based simulator built on stated security assumptions, and gradient-boosted
-        models trained on hundreds of thousands of simulated campaigns. Treat the outputs as decision support and relative risk,
-        not as an actuarial forecast. API docs: <a href="/docs">/docs</a>.</p>
+        <div class="tabpanel" data-panel="actions" role="tabpanel" hidden>
+          <div class="pr-head"><span class="pr-title">Recommended actions</span><span class="pr-unit">ranked by predicted risk reduction</span></div>
+          <div id="plan"></div>
+          <div class="classes" id="recs"></div>
+        </div>
+
+        <div class="tabpanel" data-panel="threat" role="tabpanel" hidden>
+          <div class="pr-head"><span class="pr-title">How risk scales with the swarm</span><span class="pr-unit">probability vs attacking agents</span></div>
+          <div id="chart-swarm" class="chart"></div>
+          <div class="pr-head gap"><span class="pr-title">Threat matrix</span><span class="pr-unit">risk index · swarm size × sophistication</span></div>
+          <div id="chart-matrix" class="chart"></div>
+          <p class="chart-note">Everything else about the company stays fixed. The dotted line marks the scenario in the profile.</p>
+        </div>
+
+        <div class="tabpanel" data-panel="simulation" role="tabpanel" hidden>
+          <div class="pr-head">
+            <span class="pr-title">Attack simulation</span>
+            <div class="pr-faces" id="sim-runs" role="radiogroup" aria-label="Number of simulated campaigns">
+              <button class="pr-face" data-runs="500" type="button">500</button>
+              <button class="pr-face active" data-runs="2000" type="button">2,000</button>
+              <button class="pr-face" data-runs="5000" type="button">5,000</button>
+            </div>
+            <button id="btn-sim" class="pr-face run" type="button">RUN SIMULATION</button>
+          </div>
+          <p id="sim-empty" class="chart-note">Replay thousands of swarm campaigns against this exact company through the agent-based
+            simulator. You see how a campaign unfolds hour by hour, and you can cross-check the ML prediction against ground truth.</p>
+          <div id="sim-body" hidden>
+            <div class="pr-head gap0"><span class="pr-title">Campaign timeline</span><span class="pr-unit">share of campaigns</span></div>
+            <div id="chart-timeline" class="chart"></div>
+            <div class="split">
+              <div>
+                <div class="pr-head"><span class="pr-title">Recovery time</span><span class="pr-unit">breached campaigns</span></div>
+                <div id="chart-recovery" class="chart short"></div>
+              </div>
+              <div>
+                <div class="pr-head"><span class="pr-title">How the swarm gets in</span></div>
+                <div class="hbars compact hgrp" id="vector-bars"></div>
+              </div>
+            </div>
+            <div class="pr-head gap"><span class="pr-title">ML model vs simulation</span></div>
+            <div class="cmp" id="compare-body"></div>
+            <p id="sim-notes" class="chart-note"></p>
+          </div>
+        </div>
+
+        <div class="tabpanel" data-panel="model" role="tabpanel" hidden>
+          <div class="pr-head"><span class="pr-title">Model card</span><span class="pr-unit" id="model-trained"></span></div>
+          <div class="metrics" id="model-card"></div>
+          <p class="metrics-note">AUCs are capped below 1 because every training label is one random campaign: two identical companies
+            can have different outcomes. The error against simulation compares the models with 500-run Monte-Carlo estimates on
+            200 companies the models never saw.</p>
+          <div class="pr-head gap"><span class="pr-title">How it works</span></div>
+          <div class="pipeline">
+            <div class="pipe-step"><div class="pipe-step-k">01 · SIMULATE</div><div class="pipe-step-name">Agent-based swarm simulator</div>
+              <div class="pipe-step-desc">Recon, four entry vectors (exploits, AI phishing, supply chain, hijacking the company's own AI agents),
+                lateral spread, detection, detonation, backups, recovery, losses and liquidity, in 2-hour steps.</div></div>
+            <div class="pipe-step"><div class="pipe-step-k">02 · LEARN</div><div class="pipe-step-name">Gradient-boosted surrogates</div>
+              <div class="pipe-step-desc">Monotonic models trained on 600,000 simulated campaigns. Recovery and loss are a two-mode mixture
+                (detonated vs contained). Collapse uses exact soft labels.</div></div>
+            <div class="pipe-step"><div class="pipe-step-k">03 · DECIDE</div><div class="pipe-step-name">Drivers, actions, plans</div>
+              <div class="pipe-step-desc">Millisecond predictions make what-if analysis possible: risk drivers, 16 ranked interventions, a
+                combined plan and threat curves.</div></div>
+          </div>
+          <div class="pr-head gap"><span class="pr-title">Limits</span></div>
+          <div class="method-limits">
+            <p><strong>No real AI-swarm incident data exists yet.</strong> Outcomes rest on the simulator's documented assumptions, so read them
+              as informed relative estimates, not actuarial prices.</p>
+            <p><strong>Thinly capitalised companies</strong> near the collapse threshold can be under-predicted by a few points. For the weakest
+              profiles, recovery time and loss run low too. Run a simulation to check any single company precisely.</p>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>SWARMRISK</span>
+      <a href="https://github.com/SomaxSoma/swarmrisk" target="_blank" rel="noopener">github.com/SomaxSoma/swarmrisk</a>
+      <span class="footer-right" id="footer-meta">AGENT-BASED SIMULATION · GRADIENT-BOOSTED SURROGATES</span>
     </footer>
-  </main>
+  </div>
 </div>
-<script src="/static/app.js"></script>
+<script src="/static/app.js?v=2"></script>
 </body>
 </html>

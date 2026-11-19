@@ -1,9 +1,8 @@
 /* Extra styles for the static GitHub Pages build (in-browser model status banner). */
-#py-status { position: sticky; top: 0; z-index: 20; display: flex; gap: 10px; align-items: center; justify-content: center;
-  padding: 9px 16px; background: var(--panel-2); border-bottom: 1px solid var(--border); color: var(--text); font-size: 13px; }
-#py-status[hidden] { display: none; }
-#py-status.error { background: #3a1416; border-color: var(--crit); }
-#py-status.error .spinner { display: none; }
-#py-status .spinner { width: 14px; height: 14px; flex: none; border-radius: 50%; border: 2px solid var(--border);
-  border-top-color: var(--accent-2); animation: py-spin .8s linear infinite; }
-@keyframes py-spin { to { transform: rotate(360deg); } }
+#py-status { position: sticky; top: 0; z-index: 60; display: flex; gap: 12px; align-items: center; justify-content: center;
+  padding: 11px 16px; background: rgba(10, 10, 10, .85); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, .1); color: #c2c2c2; font: 400 11px/1.5 var(--mono); letter-spacing: .1em; text-align: center }
+#py-status[hidden] { display: none }
+#py-status.error { color: #f2f2f2; border-bottom-color: rgba(255, 255, 255, .4); background: rgba(30, 30, 30, .92) }
+#py-status.error .spinner { display: none }
+#py-status .spinner { width: 6px; height: 6px; flex: none; border-radius: 50%; background: #e8e8e8; animation: brth 1.2s infinite }

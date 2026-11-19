@@ -50,13 +50,14 @@ def presets() -> list[dict]:
 def index_html() -> str:
     html = (STATIC / "index.html").read_text(encoding="utf-8")
     replacements = {
-        'href="/static/style.css">': 'href="static/style.css">\n  <link rel="stylesheet" href="static/site.css">',
+        'href="/static/style.css?v=2">': 'href="static/style.css?v=2">\n  <link rel="stylesheet" href="static/site.css?v=2">',
         '<script src="/vendor/plotly.min.js"></script>': f'<script src="{PLOTLY_CDN}"></script>',
-        '<script src="/static/app.js"></script>':
-            '<script src="static/backend.js"></script>\n<script src="static/app.js"></script>',
-        'API docs: <a href="/docs">/docs</a>.':
-            f'This page runs the trained model in your browser with Pyodide: nothing you enter leaves your machine. '
-            f'Source, REST API and CLI: <a href="{REPO_URL}">{REPO_URL.removeprefix("https://")}</a>.',
+        '<script src="/static/app.js?v=2"></script>':
+            '<script src="static/backend.js?v=2"></script>\n<script src="static/app.js?v=2"></script>',
+        '<span id="engine-label">LIVE MODEL</span>': '<span id="engine-label">RUNS IN YOUR BROWSER</span>',
+        'actuarial forecast. <a href="#model">Method and limits</a>.':
+            'actuarial forecast. This page runs the trained model in your browser with Pyodide, so nothing you enter leaves '
+            f'your machine. <a href="#model">Method and limits</a> · <a href="{REPO_URL}">source, REST API and CLI</a>.',
     }
     for old, new in replacements.items():
         if old not in html:
