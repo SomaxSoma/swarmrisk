@@ -272,7 +272,7 @@ function renderRecs(rec, pr) {
         <div>RECOVERY<b>${days(pr.recovery_days.p50)} → ${days(a.recovery_days.p50)}</b></div>
       </div>
       <button class="pr-face active" id="btn-apply-plan" type="button">APPLY PLAN TO THE PROFILE</button>`;
-    $("btn-apply-plan").onclick = () => { setProfile(rec.plan_profile); state.modified = true; assess(); showTab("outcomes", true); };
+    $("btn-apply-plan").onclick = () => { setProfile(rec.plan_profile); state.modified = true; assess({ manual: true }); showTab("outcomes", true); };
   } else {
     planEl.className = "";
     planEl.innerHTML = "";
@@ -405,20 +405,68 @@ function renderSimCharts(s) {
 }
 
 /* ------------------------------------------------------------- actions ---- */
-async function assess() {
+/* "Generating result" feedback: the Assess button turns busy and a status toast appears.
+   Live slider updates only show it if the answer takes longer than a blink, to avoid flicker. */
+const gen = { timer: null, hideTimer: null, shown: false };
+function setGenerating(on, { immediate = false, failed = false } = {}) {
+  clearTimeout(gen.timer);
+  clearTimeout(gen.hideTimer);
+  const btn = $("btn-assess"), toast = $("gen-status"), text = $("gen-text");
+  if (on) {
+    const show = () => {
+      gen.shown = true;
+      btn.classList.add("busy");
+      btn.disabled = true;
+      btn.textContent = "GENERATING…";
+      toast.classList.remove("done");
+      text.textContent = "GENERATING RESULT…";
+      toast.hidden = false;
+    };
+    immediate ? show() : (gen.timer = setTimeout(show, 250));
+    return;
+  }
+  btn.classList.remove("busy");
+  btn.disabled = false;
+  btn.textContent = "ASSESS";
+  if (!gen.shown) return;
+  gen.shown = false;
+  if (failed) { toast.hidden = true; return; }
+  toast.classList.add("done");
+  text.textContent = "RESULT READY";
+  gen.hideTimer = setTimeout(() => { toast.hidden = true; }, 1400);
+}
+
+function pressEffect(btn) {
+  btn.classList.remove("pressed");
+  void btn.offsetWidth;                            // restart the animation on every click
+  btn.classList.add("pressed");
+}
+
+async function assess({ manual = false } = {}) {
   const seq = ++state.seq;
+  const started = performance.now();
   document.body.classList.add("loading");
+  setGenerating(true, { immediate: manual });
+  let failed = false;
   try {
     const rep = await api("/api/predict", getProfile());
     if (seq !== state.seq) return;                 // a newer request is in flight
+    // After a click, keep "generating" on screen long enough to be read.
+    const wait = manual ? 600 - (performance.now() - started) : 0;
+    if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+    if (seq !== state.seq) return;
     state.report = rep;
     showError("");
     if (state.sim) clearSim();
     render(rep);
   } catch (e) {
+    failed = true;
     if (seq === state.seq) showError(e.message);
   } finally {
-    if (seq === state.seq) document.body.classList.remove("loading");
+    if (seq === state.seq) {
+      document.body.classList.remove("loading");
+      setGenerating(false, { failed });
+    }
   }
 }
 
@@ -471,7 +519,7 @@ async function init() {
     };
     sel.onchange = choose;
     $("btn-reset").onclick = choose;
-    $("btn-assess").onclick = assess;
+    $("btn-assess").onclick = (e) => { pressEffect(e.currentTarget); assess({ manual: true }); };
     $("btn-sim").onclick = runSim;
     $("btn-export").onclick = exportReport;
     document.querySelectorAll("#sim-runs .pr-face").forEach((b) => {

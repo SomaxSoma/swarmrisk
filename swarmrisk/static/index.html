@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="/static/style.css?v=2">
+  <link rel="stylesheet" href="/static/style.css?v=3">
   <script src="/vendor/plotly.min.js"></script>
 </head>
 <body>
@@ -61,6 +61,9 @@
     </nav>
 
     <div class="error" id="error" role="alert" hidden></div>
+    <div class="gen-status" id="gen-status" role="status" aria-live="polite" hidden>
+      <span class="gen-dot" aria-hidden="true"></span><span id="gen-text">GENERATING RESULT…</span>
+    </div>
 
     <main class="panel">
       <aside class="panel-left">
@@ -196,6 +199,6 @@
     </footer>
   </div>
 </div>
-<script src="/static/app.js?v=2"></script>
+<script src="/static/app.js?v=3"></script>
 </body>
 </html>

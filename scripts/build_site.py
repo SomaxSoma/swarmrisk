@@ -50,10 +50,10 @@ def presets() -> list[dict]:
 def index_html() -> str:
     html = (STATIC / "index.html").read_text(encoding="utf-8")
     replacements = {
-        'href="/static/style.css?v=2">': 'href="static/style.css?v=2">\n  <link rel="stylesheet" href="static/site.css?v=2">',
+        'href="/static/style.css?v=3">': 'href="static/style.css?v=3">\n  <link rel="stylesheet" href="static/site.css?v=3">',
         '<script src="/vendor/plotly.min.js"></script>': f'<script src="{PLOTLY_CDN}"></script>',
-        '<script src="/static/app.js?v=2"></script>':
-            '<script src="static/backend.js?v=2"></script>\n<script src="static/app.js?v=2"></script>',
+        '<script src="/static/app.js?v=3"></script>':
+            '<script src="static/backend.js?v=3"></script>\n<script src="static/app.js?v=3"></script>',
         '<span id="engine-label">LIVE MODEL</span>': '<span id="engine-label">RUNS IN YOUR BROWSER</span>',
         'actuarial forecast. <a href="#model">Method and limits</a>.':
             'actuarial forecast. This page runs the trained model in your browser with Pyodide, so nothing you enter leaves '
